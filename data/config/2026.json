@@ -191,44 +191,123 @@
         {
           "id": "health",
           "label": "Health",
-          "sourceLabel": "Health"
+          "sourceLabel": "Health",
+          "programmeCodes": [
+            "O-A",
+            "O-D",
+            "O-G"
+          ]
         },
         {
           "id": "education",
           "label": "Education",
-          "sourceLabel": "Education"
+          "sourceLabel": "Education",
+          "programmeCodes": [
+            "K-A",
+            "K-B",
+            "K-C",
+            "K-D",
+            "K-E",
+            "K-F",
+            "K-G",
+            "K-H",
+            "K-I",
+            "K-J",
+            "K-K",
+            "K-L",
+            "K-M",
+            "K-N",
+            "K-O",
+            "K-P",
+            "K-Q",
+            "K-R",
+            "K-S",
+            "K-T",
+            "K-U",
+            "K-V",
+            "K-W",
+            "K-X",
+            "K-Y",
+            "K-Z",
+            "K-1"
+          ]
         },
         {
           "id": "national-development",
           "label": "National Development",
-          "sourceLabel": "National Development"
+          "sourceLabel": "National Development",
+          "programmeCodes": [
+            "T-A",
+            "T-E",
+            "T-I",
+            "T-J",
+            "T-K",
+            "T-L",
+            "T-G"
+          ]
         },
         {
           "id": "social-family-development",
           "label": "Social and Family Development",
-          "sourceLabel": "Social and Family Development"
+          "sourceLabel": "Social and Family Development",
+          "programmeCodes": [
+            "I-A",
+            "I-G",
+            "I-H",
+            "I-I"
+          ]
         },
         {
           "id": "sustainability-environment",
           "label": "Sustainability and the Environment",
-          "sourceLabel": "Sustainability and the Environment"
+          "sourceLabel": "Sustainability and the Environment",
+          "programmeCodes": [
+            "L-A",
+            "L-G",
+            "L-H",
+            "L-I"
+          ]
         },
         {
           "id": "culture-community-youth",
           "label": "Culture, Community and Youth",
-          "sourceLabel": "Culture, Community and Youth"
+          "sourceLabel": "Culture, Community and Youth",
+          "programmeCodes": [
+            "X-A",
+            "X-B",
+            "X-C",
+            "X-D",
+            "X-E",
+            "X-F",
+            "X-I",
+            "X-J",
+            "X-P",
+            "X-Q",
+            "X-R",
+            "X-S",
+            "X-T",
+            "X-U"
+          ]
         },
         {
           "id": "manpower-social",
           "label": "Manpower",
           "sourceLabel": "Manpower",
-          "note": "Financial Security for Singaporeans programme only. The economic-development portion is shown separately."
+          "note": "Financial Security for Singaporeans programme only. The economic-development portion is shown separately.",
+          "programmeCodes": [
+            "S-Q"
+          ]
         },
         {
           "id": "digital-social",
           "label": "Digital Development and Information",
           "sourceLabel": "Digital Development and Information",
-          "note": "Social-development portion of the Ministry of Digital Development and Information. Other portions appear in economic development and government administration."
+          "note": "Social-development portion of the Ministry of Digital Development and Information. Other portions appear in economic development and government administration.",
+          "programmeCodes": [
+            "Q-A",
+            "Q-B",
+            "Q-J"
+          ]
         }
       ]
     },
@@ -240,17 +319,34 @@
         {
           "id": "defence",
           "label": "Defence",
-          "sourceLabel": "Defence"
+          "sourceLabel": "Defence",
+          "programmeCodes": [
+            "J-A"
+          ]
         },
         {
           "id": "home-affairs",
           "label": "Home Affairs",
-          "sourceLabel": "Home Affairs"
+          "sourceLabel": "Home Affairs",
+          "programmeCodes": [
+            "P-A",
+            "P-C",
+            "P-D",
+            "P-F",
+            "P-G",
+            "P-H",
+            "P-I",
+            "P-J",
+            "P-K"
+          ]
         },
         {
           "id": "foreign-affairs",
           "label": "Foreign Affairs",
-          "sourceLabel": "Foreign Affairs"
+          "sourceLabel": "Foreign Affairs",
+          "programmeCodes": [
+            "N-A"
+          ]
         }
       ]
     },
@@ -262,24 +358,51 @@
         {
           "id": "transport",
           "label": "Transport",
-          "sourceLabel": "Transport"
+          "sourceLabel": "Transport",
+          "programmeCodes": [
+            "W-A",
+            "W-E",
+            "W-G",
+            "W-H"
+          ]
         },
         {
           "id": "trade-industry",
           "label": "Trade and Industry",
-          "sourceLabel": "Trade and Industry"
+          "sourceLabel": "Trade and Industry",
+          "programmeCodes": [
+            "V-A",
+            "V-B",
+            "V-E",
+            "V-H",
+            "V-J",
+            "V-L",
+            "V-N",
+            "V-P",
+            "V-Q",
+            "V-R"
+          ]
         },
         {
           "id": "manpower-economic",
           "label": "Manpower",
           "sourceLabel": "Manpower",
-          "note": "Economic-development portion of the Ministry of Manpower. The social-development portion is shown separately."
+          "note": "Economic-development portion of the Ministry of Manpower. The social-development portion is shown separately.",
+          "programmeCodes": [
+            "S-R",
+            "S-S",
+            "S-T"
+          ]
         },
         {
           "id": "digital-economic",
           "label": "Digital Development and Information",
           "sourceLabel": "Digital Development and Information",
-          "note": "Info-communications Media Development Authority and Cyber Security Agency of Singapore programmes only."
+          "note": "Info-communications Media Development Authority and Cyber Security Agency of Singapore programmes only.",
+          "programmeCodes": [
+            "Q-S",
+            "Q-T"
+          ]
         }
       ]
     },
@@ -291,29 +414,75 @@
         {
           "id": "finance",
           "label": "Finance",
-          "sourceLabel": "Finance"
+          "sourceLabel": "Finance",
+          "programmeCodes": [
+            "M-A",
+            "M-C",
+            "M-G",
+            "M-O",
+            "M-P"
+          ]
         },
         {
           "id": "organs-of-state",
           "label": "Organs Of State",
           "sourceLabel": "Organs Of State",
-          "note": "Includes the Civil List, Attorney-General’s Chambers, Auditor-General’s Office, Cabinet Office, Judicature, Parliament, Presidential Councils and Public Service Commission."
+          "note": "Includes the Civil List, Attorney-General’s Chambers, Auditor-General’s Office, Cabinet Office, Judicature, Parliament, Presidential Councils and Public Service Commission.",
+          "programmeCodes": [
+            "A-A",
+            "B-A",
+            "C-A",
+            "D-A",
+            "E-A",
+            "F-A",
+            "G-A",
+            "G-B",
+            "G-C",
+            "H-A"
+          ]
         },
         {
           "id": "prime-ministers-office",
           "label": "Prime Minister's Office",
-          "sourceLabel": "Prime Minister's Office"
+          "sourceLabel": "Prime Minister's Office",
+          "programmeCodes": [
+            "U-A",
+            "U-B",
+            "U-C",
+            "U-G",
+            "U-H",
+            "U-L",
+            "U-P",
+            "U-S",
+            "U-T"
+          ]
         },
         {
           "id": "digital-administration",
           "label": "Digital Development and Information",
           "sourceLabel": "Digital Development and Information",
-          "note": "Smart Nation Group and Government Technology Agency programmes only."
+          "note": "Smart Nation Group and Government Technology Agency programmes only.",
+          "programmeCodes": [
+            "Q-U",
+            "Q-V"
+          ]
         },
         {
           "id": "law",
           "label": "Law",
-          "sourceLabel": "Law"
+          "sourceLabel": "Law",
+          "programmeCodes": [
+            "R-A",
+            "R-D",
+            "R-E",
+            "R-F",
+            "R-G",
+            "R-I",
+            "R-J",
+            "R-N",
+            "R-O",
+            "R-P"
+          ]
         }
       ]
     }
@@ -368,5 +537,792 @@
     "directTransferPage": "241",
     "fundTopupPage": "444",
     "fundDetailPage": "20"
-  }
+  },
+  "programmes": [
+    {
+      "code": "A-A",
+      "sourceLabel": "Civil List Programme",
+      "sourcePage": "18",
+      "label": "Civil List for the President",
+      "note": "Official Civil List Programme under the Civil List for the President head of expenditure."
+    },
+    {
+      "code": "B-A",
+      "sourceLabel": "Legal Services Programme",
+      "sourcePage": "23",
+      "label": "Attorney-General’s Chambers",
+      "note": "Official Legal Services Programme under the Attorney-General’s Chambers head of expenditure."
+    },
+    {
+      "code": "C-A",
+      "sourceLabel": "Audit Programme",
+      "sourcePage": "28",
+      "label": "Auditor-General’s Office",
+      "note": "Official Audit Programme under the Auditor-General’s Office head of expenditure."
+    },
+    {
+      "code": "D-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "34",
+      "label": "Cabinet Office",
+      "note": "Official Administration Programme under the Cabinet Office head of expenditure."
+    },
+    {
+      "code": "E-A",
+      "sourceLabel": "Judicature Programme",
+      "sourcePage": "39",
+      "label": "Judicature",
+      "note": "Official Judicature Programme under the Judicature head of expenditure."
+    },
+    {
+      "code": "F-A",
+      "sourceLabel": "Parliamentary Programme",
+      "sourcePage": "44",
+      "label": "Parliament",
+      "note": "Official Parliamentary Programme under the Parliament head of expenditure."
+    },
+    {
+      "code": "G-A",
+      "sourceLabel": "Presidential Council for Minority Rights Programme",
+      "sourcePage": "50",
+      "label": "Presidential Council for Minority Rights"
+    },
+    {
+      "code": "G-B",
+      "sourceLabel": "Council of Presidential Advisers Programme",
+      "sourcePage": "50",
+      "label": "Council of Presidential Advisers"
+    },
+    {
+      "code": "G-C",
+      "sourceLabel": "Presidential Council for Religious Harmony Programme",
+      "sourcePage": "50",
+      "label": "Presidential Council for Religious Harmony"
+    },
+    {
+      "code": "H-A",
+      "sourceLabel": "Public Service Commission Programme",
+      "sourcePage": "54",
+      "label": "Public Service Commission"
+    },
+    {
+      "code": "I-A",
+      "sourceLabel": "Corporate Services Programme",
+      "sourcePage": "60",
+      "label": "Corporate Services"
+    },
+    {
+      "code": "I-G",
+      "sourceLabel": "Family and Child Development Programme",
+      "sourcePage": "60",
+      "label": "Family and Child Development"
+    },
+    {
+      "code": "I-H",
+      "sourceLabel": "Social Support, Rehabilitation and Protection Programme",
+      "sourcePage": "60",
+      "label": "Social Support, Rehabilitation and Protection"
+    },
+    {
+      "code": "I-I",
+      "sourceLabel": "Sector Partnership and Development Programme",
+      "sourcePage": "60",
+      "label": "Sector Partnership and Development"
+    },
+    {
+      "code": "J-A",
+      "sourceLabel": "National Defence Programme",
+      "sourcePage": "70",
+      "label": "National Defence",
+      "note": "MOF publishes a single National Defence Programme at this level. No unsupported split between armed-service branches is inferred."
+    },
+    {
+      "code": "K-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "81",
+      "label": "Administration"
+    },
+    {
+      "code": "K-B",
+      "sourceLabel": "Higher Education and SkillsFuture Programme",
+      "sourcePage": "81",
+      "label": "Higher Education and SkillsFuture"
+    },
+    {
+      "code": "K-C",
+      "sourceLabel": "School Services and Educational Development Programme",
+      "sourcePage": "81",
+      "label": "School Services and Educational Development"
+    },
+    {
+      "code": "K-D",
+      "sourceLabel": "Government Schools and Junior Colleges Programme",
+      "sourcePage": "81",
+      "label": "Government Schools and Junior Colleges"
+    },
+    {
+      "code": "K-E",
+      "sourceLabel": "Special Education Schools Programme",
+      "sourcePage": "81",
+      "label": "Special Education Schools"
+    },
+    {
+      "code": "K-F",
+      "sourceLabel": "Government-Aided Schools and Junior Colleges Programme",
+      "sourcePage": "81",
+      "label": "Government-Aided Schools and Junior Colleges"
+    },
+    {
+      "code": "K-G",
+      "sourceLabel": "Independent Schools Programme",
+      "sourcePage": "81",
+      "label": "Independent Schools"
+    },
+    {
+      "code": "K-H",
+      "sourceLabel": "National Institute of Education Programme",
+      "sourcePage": "81",
+      "label": "National Institute of Education"
+    },
+    {
+      "code": "K-I",
+      "sourceLabel": "National University of Singapore Programme",
+      "sourcePage": "81",
+      "label": "National University of Singapore"
+    },
+    {
+      "code": "K-J",
+      "sourceLabel": "Nanyang Technological University Programme",
+      "sourcePage": "81",
+      "label": "Nanyang Technological University"
+    },
+    {
+      "code": "K-K",
+      "sourceLabel": "ISEAS - Yusof Ishak Institute Programme",
+      "sourcePage": "81",
+      "label": "ISEAS - Yusof Ishak Institute"
+    },
+    {
+      "code": "K-L",
+      "sourceLabel": "Singapore Polytechnic Programme",
+      "sourcePage": "81",
+      "label": "Singapore Polytechnic"
+    },
+    {
+      "code": "K-M",
+      "sourceLabel": "Ngee Ann Polytechnic Programme",
+      "sourcePage": "81",
+      "label": "Ngee Ann Polytechnic"
+    },
+    {
+      "code": "K-N",
+      "sourceLabel": "Temasek Polytechnic Programme",
+      "sourcePage": "81",
+      "label": "Temasek Polytechnic"
+    },
+    {
+      "code": "K-O",
+      "sourceLabel": "Institute of Technical Education Programme",
+      "sourcePage": "81",
+      "label": "Institute of Technical Education"
+    },
+    {
+      "code": "K-P",
+      "sourceLabel": "Science Centre Board Programme",
+      "sourcePage": "81",
+      "label": "Science Centre Board"
+    },
+    {
+      "code": "K-Q",
+      "sourceLabel": "Nanyang Polytechnic Programme",
+      "sourcePage": "81",
+      "label": "Nanyang Polytechnic"
+    },
+    {
+      "code": "K-R",
+      "sourceLabel": "Singapore University of Social Sciences Programme",
+      "sourcePage": "81",
+      "label": "Singapore University of Social Sciences"
+    },
+    {
+      "code": "K-S",
+      "sourceLabel": "Singapore Management University Programme",
+      "sourcePage": "81",
+      "label": "Singapore Management University"
+    },
+    {
+      "code": "K-T",
+      "sourceLabel": "Nanyang Academy of Fine Arts Programme",
+      "sourcePage": "81",
+      "label": "Nanyang Academy of Fine Arts"
+    },
+    {
+      "code": "K-U",
+      "sourceLabel": "LASALLE College of the Arts Programme",
+      "sourcePage": "81",
+      "label": "LASALLE College of the Arts"
+    },
+    {
+      "code": "K-V",
+      "sourceLabel": "Republic Polytechnic Programme",
+      "sourcePage": "81",
+      "label": "Republic Polytechnic"
+    },
+    {
+      "code": "K-W",
+      "sourceLabel": "Singapore Examinations and Assessment Board Programme",
+      "sourcePage": "81",
+      "label": "Singapore Examinations and Assessment Board"
+    },
+    {
+      "code": "K-X",
+      "sourceLabel": "Singapore University of Technology and Design Programme",
+      "sourcePage": "81",
+      "label": "Singapore University of Technology and Design"
+    },
+    {
+      "code": "K-Y",
+      "sourceLabel": "Singapore Institute of Technology Programme",
+      "sourcePage": "81",
+      "label": "Singapore Institute of Technology"
+    },
+    {
+      "code": "K-Z",
+      "sourceLabel": "SkillsFuture Singapore Programme",
+      "sourcePage": "81",
+      "label": "SkillsFuture Singapore"
+    },
+    {
+      "code": "K-1",
+      "sourceLabel": "University of the Arts Singapore Programme",
+      "sourcePage": "81",
+      "label": "University of the Arts Singapore"
+    },
+    {
+      "code": "L-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "96",
+      "label": "Administration"
+    },
+    {
+      "code": "L-G",
+      "sourceLabel": "Public Utilities Board Programme",
+      "sourcePage": "96",
+      "label": "Public Utilities Board"
+    },
+    {
+      "code": "L-H",
+      "sourceLabel": "National Environment Agency Programme",
+      "sourcePage": "96",
+      "label": "National Environment Agency"
+    },
+    {
+      "code": "L-I",
+      "sourceLabel": "Singapore Food Agency Programme",
+      "sourcePage": "96",
+      "label": "Singapore Food Agency"
+    },
+    {
+      "code": "M-A",
+      "sourceLabel": "Finance Programme",
+      "sourcePage": "108",
+      "label": "Finance"
+    },
+    {
+      "code": "M-C",
+      "sourceLabel": "Accounting Services Programme",
+      "sourcePage": "108",
+      "label": "Accounting Services"
+    },
+    {
+      "code": "M-G",
+      "sourceLabel": "Shared Services Programme",
+      "sourcePage": "108",
+      "label": "Shared Services"
+    },
+    {
+      "code": "M-O",
+      "sourceLabel": "Singapore Customs Programme",
+      "sourcePage": "108",
+      "label": "Singapore Customs"
+    },
+    {
+      "code": "M-P",
+      "sourceLabel": "Inland Revenue Authority of Singapore Programme",
+      "sourcePage": "108",
+      "label": "Inland Revenue Authority of Singapore"
+    },
+    {
+      "code": "N-A",
+      "sourceLabel": "Foreign Affairs Programme",
+      "sourcePage": "118",
+      "label": "Foreign Affairs"
+    },
+    {
+      "code": "O-A",
+      "sourceLabel": "Ministry of Health Headquarters Programme",
+      "sourcePage": "126",
+      "label": "Ministry of Health Headquarters"
+    },
+    {
+      "code": "O-D",
+      "sourceLabel": "Services Programme",
+      "sourcePage": "126",
+      "label": "Services",
+      "note": "The Ministry of Health Services Programme groups public healthcare services funding; it does not publish a complete hospital-by-hospital allocation in this programme table."
+    },
+    {
+      "code": "O-G",
+      "sourceLabel": "Health Promotion and Preventive Healthcare Programme",
+      "sourcePage": "126",
+      "label": "Health Promotion and Preventive Healthcare"
+    },
+    {
+      "code": "P-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "139",
+      "label": "Administration"
+    },
+    {
+      "code": "P-C",
+      "sourceLabel": "Police Programme",
+      "sourcePage": "139",
+      "label": "Police"
+    },
+    {
+      "code": "P-D",
+      "sourceLabel": "Civil Defence Programme",
+      "sourcePage": "139",
+      "label": "Civil Defence"
+    },
+    {
+      "code": "P-F",
+      "sourceLabel": "Offender Management and Rehabilitation Programme",
+      "sourcePage": "139",
+      "label": "Offender Management and Rehabilitation"
+    },
+    {
+      "code": "P-G",
+      "sourceLabel": "Drug Enforcement Programme",
+      "sourcePage": "139",
+      "label": "Drug Enforcement"
+    },
+    {
+      "code": "P-H",
+      "sourceLabel": "Immigration and Checkpoint Control Programme",
+      "sourcePage": "139",
+      "label": "Immigration and Checkpoint Control"
+    },
+    {
+      "code": "P-I",
+      "sourceLabel": "Home Team Academy Programme",
+      "sourcePage": "139",
+      "label": "Home Team Academy"
+    },
+    {
+      "code": "P-J",
+      "sourceLabel": "Home Team Science and Technology Agency Programme",
+      "sourcePage": "139",
+      "label": "Home Team Science and Technology Agency"
+    },
+    {
+      "code": "P-K",
+      "sourceLabel": "Yellow Ribbon Singapore Programme",
+      "sourcePage": "139",
+      "label": "Yellow Ribbon Singapore"
+    },
+    {
+      "code": "Q-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "157",
+      "label": "Administration"
+    },
+    {
+      "code": "Q-B",
+      "sourceLabel": "Information Programme",
+      "sourcePage": "157",
+      "label": "Information"
+    },
+    {
+      "code": "Q-J",
+      "sourceLabel": "National Library Board Programme",
+      "sourcePage": "157",
+      "label": "National Library Board"
+    },
+    {
+      "code": "Q-S",
+      "sourceLabel": "Info-Communications Media Development Authority Programme",
+      "sourcePage": "157",
+      "label": "Info-Communications Media Development Authority"
+    },
+    {
+      "code": "Q-T",
+      "sourceLabel": "Cyber Security Agency of Singapore Programme",
+      "sourcePage": "157",
+      "label": "Cyber Security Agency of Singapore"
+    },
+    {
+      "code": "Q-U",
+      "sourceLabel": "Smart Nation Group Programme",
+      "sourcePage": "157",
+      "label": "Smart Nation Group"
+    },
+    {
+      "code": "Q-V",
+      "sourceLabel": "Government Technology Agency Programme",
+      "sourcePage": "157",
+      "label": "Government Technology Agency"
+    },
+    {
+      "code": "R-A",
+      "sourceLabel": "Management and Development Programme",
+      "sourcePage": "167",
+      "label": "Management and Development"
+    },
+    {
+      "code": "R-D",
+      "sourceLabel": "Appeals Board Programme",
+      "sourcePage": "167",
+      "label": "Appeals Board"
+    },
+    {
+      "code": "R-E",
+      "sourceLabel": "Public Trustee Programme",
+      "sourcePage": "167",
+      "label": "Public Trustee"
+    },
+    {
+      "code": "R-F",
+      "sourceLabel": "Registries of Moneylenders and Pawnbrokers Programme",
+      "sourcePage": "167",
+      "label": "Registries of Moneylenders and Pawnbrokers"
+    },
+    {
+      "code": "R-G",
+      "sourceLabel": "Insolvency Programme",
+      "sourcePage": "167",
+      "label": "Insolvency"
+    },
+    {
+      "code": "R-I",
+      "sourceLabel": "Legal Aid Programme",
+      "sourcePage": "167",
+      "label": "Legal Aid"
+    },
+    {
+      "code": "R-J",
+      "sourceLabel": "Policy and Corporate Services Programme",
+      "sourcePage": "167",
+      "label": "Policy and Corporate Services"
+    },
+    {
+      "code": "R-N",
+      "sourceLabel": "Lands and Properties Administration Programme",
+      "sourcePage": "167",
+      "label": "Lands and Properties Administration"
+    },
+    {
+      "code": "R-O",
+      "sourceLabel": "Community Mediation Programme",
+      "sourcePage": "167",
+      "label": "Community Mediation"
+    },
+    {
+      "code": "R-P",
+      "sourceLabel": "Maintenance Enforcement Programme",
+      "sourcePage": "167",
+      "label": "Maintenance Enforcement"
+    },
+    {
+      "code": "S-Q",
+      "sourceLabel": "Financial Security for Singaporeans Programme",
+      "sourcePage": "176",
+      "label": "Financial Security for Singaporeans"
+    },
+    {
+      "code": "S-R",
+      "sourceLabel": "Corporate Services and Information Technology Programme",
+      "sourcePage": "176",
+      "label": "Corporate Services and Information Technology"
+    },
+    {
+      "code": "S-S",
+      "sourceLabel": "Productive Workforce Programme",
+      "sourcePage": "176",
+      "label": "Productive Workforce"
+    },
+    {
+      "code": "S-T",
+      "sourceLabel": "Progressive Workplaces Programme",
+      "sourcePage": "176",
+      "label": "Progressive Workplaces"
+    },
+    {
+      "code": "T-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "185",
+      "label": "Administration"
+    },
+    {
+      "code": "T-E",
+      "sourceLabel": "Planning Programme",
+      "sourcePage": "185",
+      "label": "Planning"
+    },
+    {
+      "code": "T-I",
+      "sourceLabel": "Public Housing Development Programme",
+      "sourcePage": "185",
+      "label": "Public Housing Development",
+      "note": "Public Housing Development Programme expenditure, including support for public housing. This is a government budget programme, not HDB’s complete financial accounts."
+    },
+    {
+      "code": "T-J",
+      "sourceLabel": "Housing Estates Management Programme",
+      "sourcePage": "185",
+      "label": "Housing Estates Management"
+    },
+    {
+      "code": "T-K",
+      "sourceLabel": "Building and Construction Authority Programme",
+      "sourcePage": "185",
+      "label": "Building and Construction Authority"
+    },
+    {
+      "code": "T-L",
+      "sourceLabel": "National Parks Board Programme",
+      "sourcePage": "185",
+      "label": "National Parks Board"
+    },
+    {
+      "code": "T-G",
+      "sourceLabel": "Land Development Programme",
+      "sourcePage": "185",
+      "label": "Land Development"
+    },
+    {
+      "code": "U-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "199",
+      "label": "Administration"
+    },
+    {
+      "code": "U-B",
+      "sourceLabel": "Elections Programme",
+      "sourcePage": "199",
+      "label": "Elections"
+    },
+    {
+      "code": "U-C",
+      "sourceLabel": "Corrupt Practices Investigation Programme",
+      "sourcePage": "199",
+      "label": "Corrupt Practices Investigation"
+    },
+    {
+      "code": "U-G",
+      "sourceLabel": "National Security and Intelligence Coordination Programme",
+      "sourcePage": "199",
+      "label": "National Security and Intelligence Coordination"
+    },
+    {
+      "code": "U-H",
+      "sourceLabel": "National Research Foundation Programme",
+      "sourcePage": "199",
+      "label": "National Research Foundation"
+    },
+    {
+      "code": "U-L",
+      "sourceLabel": "Public Service Division Programme",
+      "sourcePage": "199",
+      "label": "Public Service Division"
+    },
+    {
+      "code": "U-P",
+      "sourceLabel": "Strategy Group Programme",
+      "sourcePage": "199",
+      "label": "Strategy Group"
+    },
+    {
+      "code": "U-S",
+      "sourceLabel": "Science & Technology Policy and Plans Office Programme",
+      "sourcePage": "199",
+      "label": "Science & Technology Policy and Plans Office"
+    },
+    {
+      "code": "U-T",
+      "sourceLabel": "ServiceSG Programme",
+      "sourcePage": "199",
+      "label": "ServiceSG"
+    },
+    {
+      "code": "V-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "209",
+      "label": "Administration"
+    },
+    {
+      "code": "V-B",
+      "sourceLabel": "Statistics Programme",
+      "sourcePage": "209",
+      "label": "Statistics"
+    },
+    {
+      "code": "V-E",
+      "sourceLabel": "Economic Development Board Programme",
+      "sourcePage": "209",
+      "label": "Economic Development Board"
+    },
+    {
+      "code": "V-H",
+      "sourceLabel": "Agency for Science, Technology and Research Programme",
+      "sourcePage": "209",
+      "label": "Agency for Science, Technology and Research"
+    },
+    {
+      "code": "V-J",
+      "sourceLabel": "Sentosa Development Corporation Programme",
+      "sourcePage": "209",
+      "label": "Sentosa Development Corporation"
+    },
+    {
+      "code": "V-L",
+      "sourceLabel": "JTC Corporation Programme",
+      "sourcePage": "209",
+      "label": "JTC Corporation"
+    },
+    {
+      "code": "V-N",
+      "sourceLabel": "Singapore Tourism Board Programme",
+      "sourcePage": "209",
+      "label": "Singapore Tourism Board"
+    },
+    {
+      "code": "V-P",
+      "sourceLabel": "Competition and Consumer Commission of Singapore Programme",
+      "sourcePage": "209",
+      "label": "Competition and Consumer Commission of Singapore"
+    },
+    {
+      "code": "V-Q",
+      "sourceLabel": "Energy Market Authority Programme",
+      "sourcePage": "209",
+      "label": "Energy Market Authority"
+    },
+    {
+      "code": "V-R",
+      "sourceLabel": "Enterprise Singapore Programme",
+      "sourcePage": "209",
+      "label": "Enterprise Singapore"
+    },
+    {
+      "code": "W-A",
+      "sourceLabel": "Administration Programme",
+      "sourcePage": "220",
+      "label": "Administration",
+      "note": "Official Ministry of Transport Administration Programme, including central transport funding. It is broader than headquarters overheads and includes funding outside the separately reported statutory-board programmes."
+    },
+    {
+      "code": "W-E",
+      "sourceLabel": "Public Transport Council Programme",
+      "sourcePage": "220",
+      "label": "Public Transport Council"
+    },
+    {
+      "code": "W-G",
+      "sourceLabel": "Civil Aviation Authority Programme",
+      "sourcePage": "220",
+      "label": "Civil Aviation Authority"
+    },
+    {
+      "code": "W-H",
+      "sourceLabel": "Land Transport Authority Programme",
+      "sourcePage": "220",
+      "label": "Land Transport Authority",
+      "note": "Official Land Transport Authority Programme: development expenditure only; its published operating expenditure is zero. Other land-transport expenditure is under the Ministry of Transport Administration Programme. This is not LTA’s entire agency budget."
+    },
+    {
+      "code": "X-A",
+      "sourceLabel": "Corporate Services Programme",
+      "sourcePage": "232",
+      "label": "Corporate Services"
+    },
+    {
+      "code": "X-B",
+      "sourceLabel": "Arts and Heritage Programme",
+      "sourcePage": "232",
+      "label": "Arts and Heritage"
+    },
+    {
+      "code": "X-C",
+      "sourceLabel": "Charities and Co-Operatives Programme",
+      "sourcePage": "232",
+      "label": "Charities and Co-Operatives"
+    },
+    {
+      "code": "X-D",
+      "sourceLabel": "Resilience, Engagement & Partnerships Programme",
+      "sourcePage": "232",
+      "label": "Resilience, Engagement & Partnerships"
+    },
+    {
+      "code": "X-E",
+      "sourceLabel": "Community Relations and Engagement Programme",
+      "sourcePage": "232",
+      "label": "Community Relations and Engagement"
+    },
+    {
+      "code": "X-F",
+      "sourceLabel": "Information Technology Programme",
+      "sourcePage": "232",
+      "label": "Information Technology"
+    },
+    {
+      "code": "X-I",
+      "sourceLabel": "Sports Programme",
+      "sourcePage": "232",
+      "label": "Sports"
+    },
+    {
+      "code": "X-J",
+      "sourceLabel": "Youth Programme",
+      "sourcePage": "232",
+      "label": "Youth"
+    },
+    {
+      "code": "X-P",
+      "sourceLabel": "Majlis Ugama Islam Singapura Programme",
+      "sourcePage": "232",
+      "label": "Majlis Ugama Islam Singapura"
+    },
+    {
+      "code": "X-Q",
+      "sourceLabel": "National Arts Council Programme",
+      "sourcePage": "232",
+      "label": "National Arts Council"
+    },
+    {
+      "code": "X-R",
+      "sourceLabel": "National Heritage Board Programme",
+      "sourcePage": "232",
+      "label": "National Heritage Board"
+    },
+    {
+      "code": "X-S",
+      "sourceLabel": "People's Association Programme",
+      "sourcePage": "232",
+      "label": "People's Association"
+    },
+    {
+      "code": "X-T",
+      "sourceLabel": "Sport Singapore Programme",
+      "sourcePage": "232",
+      "label": "Sport Singapore"
+    },
+    {
+      "code": "X-U",
+      "sourceLabel": "National Youth Council Programme",
+      "sourcePage": "232",
+      "label": "National Youth Council"
+    }
+  ]
 }

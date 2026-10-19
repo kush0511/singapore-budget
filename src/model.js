@@ -5,7 +5,7 @@ export const sum = (values) => values.reduce((a, b) => a + b, 0);
 // places in billions prevents its displayed terms from contradicting the sum.
 export const formatBridgeAmount = (value) => `S$${(value / 1e9).toFixed(3)}b`;
 
-export function buildGraphData(budget, detail = "ministries") {
+export function buildGraphData(budget, detail = "ministries", options = {}) {
   const t = budget.totals;
   const nodes = [];
   const links = [];
@@ -78,7 +78,7 @@ export function buildGraphData(budget, detail = "ministries") {
         "A spending sector in the official Ministry of Finance classification. Its ministries and programme portions add to this sector total.",
     });
     link("budget-pool", sector.id, sector.amount);
-    if (detail === "ministries")
+    if (detail === "ministries" || detail === "departments")
       for (const ministry of sector.ministries) {
         const id = `${sector.id}:${ministry.id}`;
         const portion =
@@ -102,6 +102,29 @@ export function buildGraphData(budget, detail = "ministries") {
             "A ministry or programme portion in this spending sector. Operating and development expenditure are included.",
         });
         link(sector.id, id, ministry.amount);
+        const expandedId = options.expandedMinistryId || "home-affairs";
+        if (
+          detail === "departments" &&
+          (expandedId === ministry.id || expandedId === id)
+        ) {
+          for (const programme of ministry.children || []) {
+            const programmeId = `${id}:${programme.id}`;
+            add({
+              ...programme,
+              id: programmeId,
+              layer: 4,
+              role: "programme",
+              sectorId: sector.id,
+              sectorLabel: sector.label,
+              ministryId: id,
+              ministryLabel: ministry.label,
+              description:
+                programme.note ||
+                "An official Budget programme allocation. An agency-named line is the allocation under this programme, not necessarily the agency’s entire budget.",
+            });
+            link(id, programmeId, programme.amount);
+          }
+        }
       }
   }
   add({
@@ -115,7 +138,7 @@ export function buildGraphData(budget, detail = "ministries") {
       "Special transfers include transfers to households and businesses, plus top-ups to endowment and trust funds. These are separate from ministry expenditure.",
   });
   link("budget-pool", "special-transfers", t.specialTransfers);
-  if (detail === "ministries")
+  if (detail === "ministries" || detail === "departments")
     for (const row of budget.specialTransfers || []) {
       add({
         ...row,
@@ -128,6 +151,19 @@ export function buildGraphData(budget, detail = "ministries") {
           "A component of special transfers; excluded from the ministry expenditure total.",
       });
       link("special-transfers", `transfer:${row.id}`, row.amount);
+      if (detail === "departments")
+        for (const fund of row.children || []) {
+          const id = `transfer:${row.id}:${fund.id}`;
+          add({
+            ...fund,
+            id,
+            layer: 4,
+            role: "fund",
+            description:
+              "A Budget top-up to this fund, not the fund’s subsequent spending. Counted within special transfers.",
+          });
+          link(`transfer:${row.id}`, id, fund.amount);
+        }
     }
   if (surplus) {
     add({
@@ -185,7 +221,7 @@ export function tableRows(budget) {
       shareBase: "Ministry expenditure",
       denominator: t.totalExpenditure,
     });
-    for (const m of s.ministries)
+    for (const m of s.ministries) {
       rows.push({
         ...m,
         id: `${s.id}:${m.id}`,
@@ -194,6 +230,16 @@ export function tableRows(budget) {
         kind: "ministry",
         denominator: t.totalExpenditure,
       });
+      for (const p of m.children || [])
+        rows.push({
+          ...p,
+          id: `${s.id}:${m.id}:${p.id}`,
+          group: m.label,
+          kind: "programme",
+          shareBase: `${m.label} (${s.label})`,
+          denominator: m.amount,
+        });
+    }
   }
   rows.push({
     id: "special-transfers",
@@ -203,7 +249,7 @@ export function tableRows(budget) {
     sourceId: "mof-estimates",
     denominator: null,
   });
-  for (const row of budget.specialTransfers || [])
+  for (const row of budget.specialTransfers || []) {
     rows.push({
       ...row,
       id: `transfer:${row.id}`,
@@ -211,6 +257,16 @@ export function tableRows(budget) {
       kind: "transfer-detail",
       denominator: t.specialTransfers,
     });
+    for (const f of row.children || [])
+      rows.push({
+        ...f,
+        id: `transfer:${row.id}:${f.id}`,
+        group: row.label,
+        kind: "fund",
+        shareBase: row.label,
+        denominator: row.amount,
+      });
+  }
   rows.push({
     id: "budget-balance",
     label: "Overall budget balance",

@@ -1,13 +1,13 @@
 # Singapore Budget, visualised
 
-An interactive, source-linked flow of **Singapore Budget 2026 estimates**, from operating revenue and the Net Investment Returns Contribution (NIRC) to spending sectors and ministry/programme portions. Inspired by [USAFacts](https://usafacts.org/government-spending/), adapted to Singapore’s budget accounting.
+An interactive, source-linked flow of **Singapore Budget 2026 estimates**, from operating revenue and the Net Investment Returns Contribution (NIRC) to spending sectors, ministry portions, and 129 official programme allocations. Inspired by [USAFacts](https://usafacts.org/government-spending/), adapted to Singapore’s budget accounting.
 
-**Live site:** [kush0511.github.io/singapore-budget](https://kush0511.github.io/singapore-budget/)
+**GitHub Pages target (requires Pages enabled):** [kush0511.github.io/singapore-budget](https://kush0511.github.io/singapore-budget/)
 
 ## Explore
 
-- Switch between sectors and ministry detail; search categories, including GST and COE.
-- Select or keyboard-focus a flow node for its exact amount, context and official source.
+- Switch between sectors, ministries, and agencies/programmes. Select a ministry or use the ministry selector to reveal its official programme allocations; search categories, including GST and COE.
+- Select or keyboard-focus a flow block for its exact amount, scope, source code and official PDF page. The red-and-ivory civic masthead, Singapore flag and broad saturated blocks foreground the budget rather than a dashboard template.
 - Open the accessible data table or download a CSV / source-linked JSON dataset.
 - Read the separate bridge from overall budget balance to overall fiscal position.
 - On phones, scroll within the diagram; the rest of the page fits the viewport.
@@ -45,7 +45,7 @@ The primary evidence is MOF’s detailed estimates and fiscal analysis, cross-ch
 
 All calculations retain integer SGD amounts at their source precision. NIRC and fiscal balances are published to S$1 million; a **S$324,300 published-rounding reconciliation**, explicitly excluded from spending, reconciles those with the detailed estimates. The official S$4.176 billion overall budget surplus is preserved. The separate overall fiscal position is S$8.543 billion.
 
-Receipts enter a common pool. The graphic does not trace or earmark individual taxes to particular ministries. Special transfers, fund top-ups, SINGA adjustments, and programme portions are kept explicit to avoid double-counting.
+Receipts enter a common pool. The graphic does not trace or earmark individual taxes to particular ministries. Special transfers, fund top-ups, SINGA adjustments, and programme portions are kept explicit to avoid double-counting. The deeper tier consists of official programme allocations, not assumed whole-agency budgets. For example, an LTA-labelled programme is not LTA’s full funding, and the Defence/MFA tables do not publish an internal departmental split.
 
 See [data definitions and annual update guide](docs/DATA.md) and the [independent adversarial audit](docs/AUDIT.md).
 
@@ -67,6 +67,7 @@ The Vite base is relative, so the build works under a GitHub Pages project path.
 - `scripts/validate-data.mjs`: release accounting invariants
 - `public/data/`: generated versioned browser datasets
 - `src/model.js`: pure integer-SGD graph and table model
+- `src/chart.js`: broad-block Sankey renderer with a common dollar scale
 - `src/main.js`, `src/style.css`: responsive, build-time-only frontend
 - `tests/audit-budget.test.mjs`: independently transcribed source controls and graph checks
 - `tests/browser_smoke.py`: real-browser interaction and layout checks

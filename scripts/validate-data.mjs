@@ -41,6 +41,8 @@ export function validateBudget(data, { verifySources = true } = {}) {
   };
   for (const item of data.revenue) row(item, 'revenue');
   assert(data.revenue.length > 0);
+  const programmeCodes = new Set();
+  const programmes = [];
   for (const sector of data.sectors) {
     row(sector, 'sector');
     integer(sector.operating, `${sector.id}.operating`);
@@ -52,6 +54,21 @@ export function validateBudget(data, { verifySources = true } = {}) {
       integer(ministry.operating, `${ministry.id}.operating`);
       integer(ministry.development, `${ministry.id}.development`);
       assert.equal(ministry.amount, ministry.operating + ministry.development, `${ministry.id} expenditure split`);
+      assert(Array.isArray(ministry.children) && ministry.children.length > 0, `${ministry.id} lacks official programme detail`);
+      for (const programme of ministry.children) {
+        row(programme, 'programme');
+        assert.equal(programme.kind, 'programme', `${programme.id} must be labelled as an official programme`);
+        assert.match(programme.sourceCode, /^[A-X]-[A-Z0-9]+$/);
+        assert(!programmeCodes.has(programme.sourceCode), `Duplicate programme source code: ${programme.sourceCode}`);
+        programmeCodes.add(programme.sourceCode);
+        assert.match(programme.sourcePage, /^\d+$/);
+        assert(programme.sourceLabel.endsWith(' Programme'), `${programme.id} lacks the official programme source label`);
+        for (const field of ['operating', 'development', 'runningCosts', 'transfers']) integer(programme[field], `${programme.id}.${field}`);
+        assert.equal(programme.runningCosts + programme.transfers, programme.operating, `${programme.id} operating components`);
+        assert.equal(programme.operating + programme.development, programme.amount, `${programme.id} expenditure split`);
+        programmes.push(programme);
+      }
+      for (const field of ['amount', 'operating', 'development']) assert.equal(sum(ministry.children, field), ministry[field], `${ministry.id} programme children sum (${field})`);
     }
     for (const field of ['amount', 'operating', 'development']) assert.equal(sum(sector.ministries, field), sector[field], `${sector.id} ministries sum (${field})`);
   }
@@ -66,6 +83,10 @@ export function validateBudget(data, { verifySources = true } = {}) {
   for (const [key, value] of Object.entries(t)) integer(value, `totals.${key}`, /Balance|Position/.test(key));
   assert.equal(sum(data.revenue), t.operatingRevenue, 'revenue sums to operating revenue');
   assert.equal(sum(data.sectors), t.totalExpenditure, 'sectors sum to total expenditure');
+  assert.equal(programmes.length, data.programmeCount, 'Programme count agrees with all ministry children');
+  assert.equal(sum(programmes), t.totalExpenditure, 'Every ministry dollar is assigned once to an official programme');
+  assert.equal(sum(programmes, 'operating'), t.operatingExpenditure);
+  assert.equal(sum(programmes, 'development'), t.developmentExpenditure);
   assert.equal(sum(data.sectors, 'operating'), t.operatingExpenditure);
   assert.equal(sum(data.sectors, 'development'), t.developmentExpenditure);
   assert.equal(t.operatingExpenditure + t.developmentExpenditure, t.totalExpenditure);
@@ -84,7 +105,7 @@ export function validateBudget(data, { verifySources = true } = {}) {
   close(t.operatingRevenue - t.totalExpenditure - t.directTransfers, t.basicBalance, 500_000, 'basic balance');
   close(t.overallBudgetBalance + t.capitalisation - t.depreciation - t.singaInterest, t.overallFiscalPosition, 2_000_000, 'SINGA bridge');
   for (const [key, published] of Object.entries(data.publishedRoundedTotals)) close(t[key], published, 500_000, `source rounded total ${key}`);
-  return { fiscalYear: data.fiscalYear, revenue: data.revenue.length, ministries: data.sectors.flatMap(s => s.ministries).length, reconciliation: r.amount };
+  return { fiscalYear: data.fiscalYear, revenue: data.revenue.length, ministries: data.sectors.flatMap(s => s.ministries).length, programmes: programmes.length, reconciliation: r.amount };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -97,7 +118,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const result = validateBudget(data);
     assert.equal(file, `budget-${data.fiscalYear}.json`, 'Annual filename and fiscal year must agree');
     expectedIndex.push({ year: data.fiscalYear, file, label: `FY${data.fiscalYear} · ${basisLabels[data.basis]}` });
-    console.log(`Validated FY${result.fiscalYear}: ${result.revenue} revenue categories, ${result.ministries} ministry portions, S$${result.reconciliation.toLocaleString('en-SG')} published rounding.`);
+    console.log(`Validated FY${result.fiscalYear}: ${result.revenue} revenue categories, ${result.ministries} ministry portions, ${result.programmes} official programmes, S$${result.reconciliation.toLocaleString('en-SG')} published rounding.`);
   }
   expectedIndex.sort((a, b) => b.year - a.year);
   const index = JSON.parse(readFileSync(path.resolve(root, 'public/data/index.json'), 'utf8'));

@@ -12,12 +12,14 @@ import argparse
 from contextlib import contextmanager
 import csv
 import io
+import math
 import os
 from pathlib import Path
 import re
 import subprocess
 import time
 from urllib.error import URLError
+from urllib.parse import urljoin
 from urllib.request import urlopen
 
 from playwright.sync_api import expect, sync_playwright
@@ -74,6 +76,56 @@ def check_label_spacing(flow):
     assert not collisions, f"Budget labels overlap: {collisions}"
 
 
+def check_amount_geometry(flow):
+    """Check the actual SVG, independently of the application's graph objects."""
+    geometry = flow.evaluate("""svg => ({
+        nodes: [...svg.querySelectorAll('[data-node-id]')].map(el => ({
+            id: el.dataset.nodeId,
+            amount: Number(el.dataset.amount || el.getAttribute('aria-label').match(/S\\$([\\d,]+)/)[1].replaceAll(',', '')),
+            height: Number(el.querySelector('rect').getAttribute('height'))
+        })),
+        links: [...svg.querySelectorAll('path.flow-link')].map(el => ({
+            source: el.dataset.source, target: el.dataset.target,
+            amount: el.hasAttribute('data-amount') ? Number(el.dataset.amount) : null,
+            width: Number(el.getAttribute('stroke-width'))
+        }))
+    })""")
+    nodes = {node["id"]: node for node in geometry["nodes"]}
+    links = geometry["links"]
+    assert links, "No financial connections were rendered"
+    for link in links:
+        assert link["source"] in nodes and link["target"] in nodes
+        if link["amount"] is None:
+            # This hierarchy has one parent per category. Every edge carries
+            # the smaller endpoint's amount, including receipt-to-pool edges.
+            link["amount"] = min(nodes[link["source"]]["amount"], nodes[link["target"]]["amount"])
+        assert link["amount"] > 0 and math.isfinite(link["width"])
+        assert link["width"] > 0, f"A positive financial flow is invisible: {link}"
+    largest = max(links, key=lambda link: link["amount"])
+    scale = largest["width"] / largest["amount"]
+    for link in links:
+        expected = link["amount"] * scale
+        assert math.isclose(link["width"], expected, rel_tol=1e-6, abs_tol=1e-6), (
+            f"Flow widths do not share one amount scale: {link}; expected {expected}"
+        )
+    for node in nodes.values():
+        incoming = [link["amount"] for link in links if link["target"] == node["id"]]
+        outgoing = [link["amount"] for link in links if link["source"] == node["id"]]
+        for direction, amounts in (("incoming", incoming), ("outgoing", outgoing)):
+            if amounts:
+                assert sum(amounts) == node["amount"], (
+                    f"Rendered {direction} connections do not reconcile with {node['id']}: "
+                    f"{sum(amounts)} versus {node['amount']}"
+                )
+        # Tiny nodes may have a visible minimum-size hit marker; their links
+        # must still preserve the exact proportional width checked above.
+        expected = node["amount"] * scale
+        if expected >= 2:
+            assert math.isclose(node["height"], expected, rel_tol=1e-6, abs_tol=1e-6), (
+                f"Category block height misrepresents its amount: {node}; expected {expected}"
+            )
+
+
 def check_page(browser, url: str, artifacts: Path, name: str, width: int, height: int):
     context = browser.new_context(
         viewport={"width": width, "height": height},
@@ -89,15 +141,26 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         page.goto(url, wait_until="networkidle")
         expect(page.get_by_role("heading", level=1)).to_be_visible()
         expect(page.locator("main")).to_be_visible()
-        expect(page.locator("body")).to_contain_text(re.compile(r"2026"))
+        fiscal_year = page.get_by_role("combobox", name="Fiscal year").input_value()
+        assert re.fullmatch(r"20\d{2}", fiscal_year), "The selected budget year is invalid"
+        expect(page.locator("body")).to_contain_text(fiscal_year)
         expect(page.locator("body")).not_to_contain_text(re.compile(r"\b(?:NaN|undefined|Infinity)\b"))
+        data_link = page.locator('a[download][href$=".json"]')
+        dataset_response = page.request.get(urljoin(page.url, data_link.get_attribute("href")))
+        assert dataset_response.ok, "The published source-linked dataset is unavailable"
+        dataset = dataset_response.json()
+        assert str(dataset["fiscalYear"]) == fiscal_year
         flow = page.get_by_test_id("budget-flow")
         expect(flow).to_be_visible()
         nodes = flow.locator("[data-node-id]")
-        ministry_count = nodes.count()
-        assert ministry_count > 25, "The detailed flow did not render its categories"
+        initial_count = nodes.count()
+        assert initial_count > 25, "The detailed flow did not render its categories"
+        ministry_picker = page.get_by_role("combobox", name="Explore ministry")
+        expect(ministry_picker).to_be_visible()
+        assert flow.locator('[data-role="programme"]').count() > 0, "The agency/programme column is missing"
         assert flow.locator("path.flow-link").count() > 25, "Budget connections are missing"
         check_label_spacing(flow)
+        check_amount_geometry(flow)
         assert flow.locator("rect").evaluate_all(
             "els => els.every(el => ['x','y','width','height'].every(attr => "
             "Number.isFinite(Number(el.getAttribute(attr)))) && "
@@ -106,19 +169,41 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
 
         search = page.get_by_role("searchbox", name="Search budget categories")
         search.fill("COE")
-        expect(page.locator("#search-status")).to_contain_text(re.compile(r"Fees.*charges", re.I))
+        expect(page.locator("#search-status")).to_contain_text("matching categor")
         expect(flow.locator('[data-node-id="fees-and-charges"]')).not_to_have_class(re.compile("is-muted"))
+        for query, focus_id, programme_name in (
+            ("HDB", "social-development:national-development", "Public Housing Development"),
+            ("LTA", "economic-development:transport", "Land Transport Authority"),
+        ):
+            search.fill(query)
+            expect(ministry_picker).to_have_value(focus_id)
+            programme = page.get_by_test_id("budget-flow").get_by_role(
+                "button", name=re.compile(f"^{re.escape(programme_name)}:")
+            )
+            expect(programme).to_be_visible()
+            expect(programme).not_to_have_class(re.compile("is-muted"))
+            check_label_spacing(page.get_by_test_id("budget-flow"))
+            check_amount_geometry(page.get_by_test_id("budget-flow"))
         search.fill("health")
-        expect(page.locator("#search-status")).to_contain_text("Health")
+        expect(page.locator("#search-status")).to_contain_text("matching categor")
+        expect(flow.get_by_role("button", name=re.compile(r"^Health:"))).not_to_have_class(re.compile("is-muted"))
         search.fill("no-such-budget-category-123")
         expect(page.locator("#search-status")).to_contain_text("No matching category")
         page.get_by_role("button", name="Clear search", exact=True).click()
         expect(search).to_have_value("")
 
+        revenue = flow.locator('[data-role="revenue"]').first
+        revenue.focus()
+        revenue.press("Enter")
+        detail = page.get_by_role("complementary", name="Selected category details")
+        expect(detail).to_be_visible()
+        expect(detail).to_contain_text("REVENUE")
+        expect(detail).not_to_contain_text(re.compile(r"Official programme", re.I))
+        page.get_by_role("button", name="Close category details").click()
+
         health = flow.get_by_role("button", name=re.compile(r"^Health:"))
         health.focus()
         health.press("Enter")
-        detail = page.get_by_role("complementary", name="Selected category details")
         expect(detail).to_be_visible()
         expect(detail.get_by_role("heading", name="Health", exact=True)).to_be_visible()
         expect(health).to_have_attribute("aria-pressed", "true")
@@ -128,13 +213,43 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         page.get_by_role("button", name="Close category details").click()
         expect(detail).to_be_hidden()
         expect(health).to_have_attribute("aria-pressed", "false")
+        expect(ministry_picker).to_have_value("social-development:health")
+        check_label_spacing(page.get_by_test_id("budget-flow"))
+        check_amount_geometry(page.get_by_test_id("budget-flow"))
 
+        page.get_by_role("button", name="Ministries", exact=True).click()
+        ministry_count = page.get_by_test_id("budget-flow").locator("[data-node-id]").count()
+        assert ministry_count < initial_count
+        expect(ministry_picker).to_be_hidden()
         page.get_by_role("button", name="Sectors", exact=True).click()
         expect(page.get_by_role("button", name="Sectors", exact=True)).to_have_attribute("aria-pressed", "true")
         assert page.get_by_test_id("budget-flow").locator("[data-node-id]").count() < ministry_count
         check_label_spacing(page.get_by_test_id("budget-flow"))
+        check_amount_geometry(page.get_by_test_id("budget-flow"))
         page.get_by_role("button", name="Ministries", exact=True).click()
         assert page.get_by_test_id("budget-flow").locator("[data-node-id]").count() == ministry_count
+
+        page.get_by_role("button", name="Agencies & programmes", exact=True).click()
+        expect(ministry_picker).to_be_visible()
+        for focus_id in ("social-development:education", "security-external-relations:home-affairs"):
+            ministry_picker.select_option(focus_id)
+            selected_sector, selected_ministry = focus_id.split(":", 1)
+            ministry_data = next(
+                ministry for sector in dataset["sectors"] if sector["id"] == selected_sector
+                for ministry in sector["ministries"] if ministry["id"] == selected_ministry
+            )
+            updated_flow = page.get_by_test_id("budget-flow")
+            assert updated_flow.locator('[data-role="programme"]').count() == len(ministry_data["children"])
+            check_label_spacing(updated_flow)
+            check_amount_geometry(updated_flow)
+        police = page.get_by_test_id("budget-flow").get_by_role("button", name=re.compile(r"^Police:"))
+        police.focus()
+        police.press("Enter")
+        expect(detail.get_by_role("heading", name="Police", exact=True)).to_be_visible()
+        expect(detail).to_contain_text("OFFICIAL BUDGET PROGRAMME")
+        expect(detail).to_contain_text("P-C")
+        page.keyboard.press("Escape")
+        expect(detail).to_be_hidden()
 
         page.get_by_role("button", name="Data table", exact=True).click()
         table = page.get_by_role("table")
@@ -143,28 +258,39 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         expect(page.get_by_role("button", name="Ministries", exact=True)).to_be_disabled()
         table_values = table.locator("tbody tr").evaluate_all(
             "rows => rows.map(row => { const c = row.querySelectorAll('td'); "
-            "return [c[1].textContent, c[2].textContent.replaceAll(',', '')]; })"
+            "return [c[1].childNodes[0].textContent, c[2].textContent.replaceAll(',', '')]; })"
         )
         assert len(table_values) > 25, "The exact-value data table is incomplete"
+        for sector in dataset["sectors"]:
+            for ministry in sector["ministries"]:
+                for programme in ministry.get("children", []):
+                    row_id = f"{sector['id']}:{ministry['id']}:{programme['id']}"
+                    row = table.locator(f'tr[data-row-id="{row_id}"]')
+                    expect(row).to_have_count(1)
+                    assert int(row.locator("td").nth(2).inner_text().replace(",", "")) == programme["amount"], (
+                        f"Programme {row_id} is missing or its exact table value is wrong"
+                    )
         search.fill("health")
-        expect(table.get_by_role("row").filter(has_text="Health")).not_to_have_class(re.compile("table-muted"))
+        expect(table.get_by_role("row").filter(
+            has=page.get_by_role("cell", name="Health", exact=True)
+        )).not_to_have_class(re.compile("table-muted"))
         page.get_by_role("button", name="Clear search", exact=True).click()
 
         with page.expect_download() as downloaded:
             page.get_by_role("button", name="Download budget data as CSV").click()
         download = downloaded.value
-        assert download.suggested_filename == "singapore-budget-2026.csv"
+        assert download.suggested_filename == f"singapore-budget-{fiscal_year}.csv"
         csv_text = Path(download.path()).read_text(encoding="utf-8-sig")
         csv_rows = list(csv.DictReader(io.StringIO(csv_text)))
         assert [(row["Budget line"], row["Amount SGD"]) for row in csv_rows] == [
             tuple(row) for row in table_values
         ], "The CSV differs from the exact values shown in the data table"
-        assert all(row["Fiscal year"] == "2026" for row in csv_rows)
+        assert all(row["Fiscal year"] == fiscal_year for row in csv_rows)
         page.get_by_role("button", name="Flow diagram", exact=True).click()
         expect(page.get_by_test_id("budget-flow")).to_be_visible()
         expect(table).to_be_hidden()
 
-        page.get_by_text("How do the flows add up?", exact=True).click()
+        page.get_by_text("How do the calculations reconcile?", exact=True).click()
         expect(page.locator("#rounding-explanation")).to_be_visible()
 
         # A wide flow diagram may scroll within its own labelled container;
@@ -175,8 +301,11 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         assert not errors, f"Browser errors on {name}: {errors}"
         page.evaluate("window.scrollTo(0, 0)")
         page.locator("#flow-view").evaluate("el => { el.scrollLeft = 0; }")
+        page.locator("body").evaluate("() => document.activeElement?.blur()")
+        page.mouse.move(0, 0)
         page.screenshot(path=str(artifacts / f"budget-{name}.png"), full_page=True)
-        print(f"PASS {name}: rendering, search, keyboard selection, detail levels, table, CSV, methodology, and viewport fit")
+        page.screenshot(path=str(artifacts / f"budget-{name}-viewport.png"))
+        print(f"PASS {name}: rendering, amount geometry, search, keyboard selection, detail levels, table, CSV, methodology, and viewport fit")
     except BaseException:
         page.screenshot(path=str(artifacts / f"budget-{name}-failure.png"), full_page=True)
         raise
@@ -201,6 +330,7 @@ def main():
         )
         try:
             check_page(browser, args.url, args.artifacts, "desktop", 1512, 982)
+            check_page(browser, args.url, args.artifacts, "wide", 1920, 1080)
             check_page(browser, args.url, args.artifacts, "mobile", 390, 844)
         finally:
             browser.close()

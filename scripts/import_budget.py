@@ -35,6 +35,59 @@ def unique(items, context):
 def pdf_text(path):
     return subprocess.check_output(['pdftotext', '-layout', str(path), '-'], text=True)
 
+def programme_rows(estimates: str) -> dict[str, dict]:
+    """Read exact current-year programme tables, not rounded narrative budgets.
+
+    Every programme row has running costs, transfers, operating, development and
+    total expenditure. Page 81 includes K-1, so suffixes may be alphanumeric.
+    """
+    rows = {}
+    table_heads = set()
+    for page in estimates.split('\f'):
+        if 'Total Expenditure by Programme\n' not in page:
+            continue
+        page_number = unique(re.findall(r'^\s*(\d+)\s*\n', page), 'Printed programme table page')
+        text = page.split('Total Expenditure by Programme\n', 1)[1]
+        current = None
+        table_rows = []
+        table_total = None
+        for line in text.splitlines():
+            if re.match(r'^\s*Total\s+[\d,–]+', line):
+                columns = fields(line)
+                if len(columns) != 6:
+                    raise ValueError(f'Unexpected programme total columns on page {page_number}')
+                table_total = [number(value) for value in columns[1:]]
+                break
+            match = re.fullmatch(r'\s*([A-X]-[A-Z0-9]+)\s+(.*?)\s{2,}([\d,–]+)\s+([\d,–]+)\s+([\d,–]+)\s+([\d,–]+)\s+([\d,–]+)\s*', line)
+            if match:
+                code, label, *values = match.groups()
+                if code in rows:
+                    raise ValueError(f'Duplicate programme code: {code}')
+                amounts = [number(value) for value in values]
+                current = {'sourceCode': code, 'sourceLabel': label, 'runningCosts': amounts[0], 'transfers': amounts[1], 'operating': amounts[2], 'development': amounts[3], 'amount': amounts[4], 'sourcePage': page_number}
+                if current['runningCosts'] + current['transfers'] != current['operating'] or current['operating'] + current['development'] != current['amount']:
+                    raise ValueError(f'Programme {code} does not reconcile its five source columns')
+                rows[code] = current
+                table_rows.append(current)
+            elif re.match(r'^\s*[A-X]-[A-Z0-9]+\s+', line):
+                raise ValueError(f'Unparsed programme row on page {page_number}: {line}')
+            elif line.strip() and current:
+                # PDF wraps long programme names onto a following text-only line.
+                if re.search(r'\d', line):
+                    raise ValueError(f'Unexpected programme continuation on page {page_number}: {line}')
+                current['sourceLabel'] += ' ' + line.strip()
+        if not table_rows or table_total is None:
+            raise ValueError(f'Incomplete programme table on page {page_number}')
+        for field, published in zip(['runningCosts', 'transfers', 'operating', 'development', 'amount'], table_total):
+            if sum(row[field] for row in table_rows) != published:
+                raise ValueError(f'Programme table on page {page_number} does not sum to its official {field} total')
+        heads = {row['sourceCode'].split('-')[0] for row in table_rows}
+        if len(heads) != 1 or heads & table_heads:
+            raise ValueError(f'Ambiguous programme head on page {page_number}')
+        table_heads.update(heads)
+    return rows
+
+
 def import_budget(config, fetch=False):
     year=config['fiscalYear']
     if config['basis']!='Estimated':
@@ -96,6 +149,29 @@ def import_budget(config, fetch=False):
         sectors.append({**parsed[0],'ministries':parsed[1:]})
     if cursor!=len(sector_rows):
         raise ValueError('Unparsed expenditure rows; review new publication')
+    parsed_programmes = programme_rows(estimates)
+    expected_programmes = {item['code']: item for item in config['programmes']}
+    if len(expected_programmes) != len(config['programmes']) or set(parsed_programmes) != set(expected_programmes):
+        raise ValueError('Programme codes have changed or are unaccounted for; review the annual programme mapping')
+    children_by_code = {}
+    for code, definition in expected_programmes.items():
+        parsed = parsed_programmes[code]
+        if parsed['sourceLabel'] != definition['sourceLabel'] or parsed['sourcePage'] != definition['sourcePage']:
+            raise ValueError(f'Programme {code}: source label/page has changed; review the annual config')
+        children_by_code[code] = {'id': 'programme-' + code.lower(), 'label': definition['label'], 'kind': 'programme', **parsed, 'sourceId': 'mof-estimates', 'precision': 100, **({'note': definition['note']} if 'note' in definition else {})}
+    assigned_codes = []
+    for sector, definition in zip(sectors, config['sectors']):
+        for ministry, ministry_definition in zip(sector['ministries'], definition['ministries']):
+            codes = ministry_definition['programmeCodes']
+            if not codes:
+                raise ValueError(f"{ministry['id']}: no official programme mapping")
+            ministry['children'] = [deepcopy(children_by_code[code]) for code in codes]
+            for field in ['amount', 'operating', 'development']:
+                if sum(child[field] for child in ministry['children']) != ministry[field]:
+                    raise ValueError(f"{ministry['id']}: official programmes do not sum to its sector-specific {field}; review programme-sector mapping")
+            assigned_codes.extend(codes)
+    if len(assigned_codes) != len(set(assigned_codes)) or set(assigned_codes) != set(parsed_programmes):
+        raise ValueError('Programme rows must be assigned exactly once to a ministry-sector portion')
     totals=deepcopy(fiscal)
     for key,field in [('totalExpenditure','amount'),('operatingExpenditure','operating'),('developmentExpenditure','development')]:
         totals[key]=sum(sector[field] for sector in sectors)
@@ -139,7 +215,7 @@ def import_budget(config, fetch=False):
         row=unique([r for r in current_fiscal if r['item']==label],f'data.gov fiscal {label}')
         if number(row['amount_in_millions'])*MILLION!=fiscal[key]:
             raise ValueError(f'data.gov.sg and MOF disagree for {key}')
-    result={'schemaVersion':1,'unit':'SGD','fiscalYear':year,'basis':config['basis'],'budgetDate':config['budgetDate'],'retrievedAt':config['retrievedAt'],'period':config['period'],'vintageNote':config['vintageNote'],'sourcePage':config['sourcePage'],'sources':config['sources'],'totals':totals,'precision':precision,'publishedRoundedTotals':fiscal,'revenue':revenue,'sectors':sectors,'specialTransfers':[{'id':'fund-topups','label':'Top-ups to statutory & trust funds','amount':totals['fundTopups'],'sourceId':'mof-estimates','sourcePage':config['locators']['fundTopupPage'],'precision':100,'children':[{**item,'sourceId':'mof-analysis','sourcePage':config['locators']['fundDetailPage'],'precision':1000000} for item in config['fundTopups']]},{'id':'direct-transfers','label':'Transfers to Singaporeans & businesses','amount':totals['directTransfers'],'sourceId':'mof-estimates','sourcePage':config['locators']['directTransferPage'],'precision':100}],'reconciliation':{'id':'published-rounding','label':'Published rounding','role':'reconciliation','amount':residual,'includedInSpending':False,'maximumAbsoluteAmount':1000000,'note':'The MOF publishes NIRC and overall budget balance to the nearest S$1 million. This difference reconciles those rounded figures with the more precise revenue and expenditure estimates. It is not government spending.'},'notes':['Flows show a pooled budget. Revenue sources are not earmarked to the ministries they visually connect to.','Ministry figures are total expenditure by sector from the MOF summary, excluding loans, land-related expenditure and other non-expenditure outlays. Manpower and Digital Development and Information are split across sectors by programme; their portions are not whole-ministry totals.','Special transfers include fund top-ups, not subsequent spending from those funds. Counting both would double count.','Land sales and borrowing are not operating revenue. Net Investment Returns Contribution is included separately; gross investment and interest income is not added.','The overall budget balance precedes SINGA capitalisation and financing adjustments. The overall fiscal position includes those adjustments.','Fees and charges include vehicle quota premiums (COE). They are combined to preserve the exact published category total. Changes in scope make FY2025/FY2026 fees and other revenue comparisons unsuitable without adjustment.','Widths use source amounts in Singapore dollars. Displayed billions and percentages are rounded.']}
+    result={'schemaVersion':1,'detailLevel':'Official budget programmes','programmeCount':len(parsed_programmes),'unit':'SGD','fiscalYear':year,'basis':config['basis'],'budgetDate':config['budgetDate'],'retrievedAt':config['retrievedAt'],'period':config['period'],'vintageNote':config['vintageNote'],'sourcePage':config['sourcePage'],'sources':config['sources'],'totals':totals,'precision':precision,'publishedRoundedTotals':fiscal,'revenue':revenue,'sectors':sectors,'specialTransfers':[{'id':'fund-topups','label':'Top-ups to statutory & trust funds','amount':totals['fundTopups'],'sourceId':'mof-estimates','sourcePage':config['locators']['fundTopupPage'],'precision':100,'children':[{**item,'sourceId':'mof-analysis','sourcePage':config['locators']['fundDetailPage'],'precision':1000000} for item in config['fundTopups']]},{'id':'direct-transfers','label':'Transfers to Singaporeans & businesses','amount':totals['directTransfers'],'sourceId':'mof-estimates','sourcePage':config['locators']['directTransferPage'],'precision':100}],'reconciliation':{'id':'published-rounding','label':'Published rounding','role':'reconciliation','amount':residual,'includedInSpending':False,'maximumAbsoluteAmount':1000000,'note':'The MOF publishes NIRC and overall budget balance to the nearest S$1 million. This difference reconciles those rounded figures with the more precise revenue and expenditure estimates. It is not government spending.'},'notes':['Programme detail uses the official Total Expenditure by Programme tables. Programme allocations are not complete agency financial statements. Broad published programmes remain broad; no undisclosed department split is inferred.','Flows show a pooled budget. Revenue sources are not earmarked to the ministries they visually connect to.','Ministry figures are total expenditure by sector from the MOF summary, excluding loans, land-related expenditure and other non-expenditure outlays. Manpower and Digital Development and Information are split across sectors by programme; their portions are not whole-ministry totals.','Special transfers include fund top-ups, not subsequent spending from those funds. Counting both would double count.','Land sales and borrowing are not operating revenue. Net Investment Returns Contribution is included separately; gross investment and interest income is not added.','The overall budget balance precedes SINGA capitalisation and financing adjustments. The overall fiscal position includes those adjustments.','Fees and charges include vehicle quota premiums (COE). They are combined to preserve the exact published category total. Changes in scope make FY2025/FY2026 fees and other revenue comparisons unsuitable without adjustment.','Widths use source amounts in Singapore dollars. Displayed billions and percentages are rounded.']}
     return result
 
 def annual_index(data_dir: Path) -> list[dict]:
@@ -181,7 +257,7 @@ def main():
             raise SystemExit(f'{index_path.relative_to(ROOT)} is stale; run the importer')
     else:
         index_path.write_text(index_rendered)
-    print(f"FY{config['fiscalYear']} {config['basis']}: {len(result['revenue'])} revenue categories, {len(result['sectors'])} sectors; rounding reconciliation S${result['reconciliation']['amount']:,}")
+    print(f"FY{config['fiscalYear']} {config['basis']}: {len(result['revenue'])} revenue categories, {len(result['sectors'])} sectors, {result['programmeCount']} official programmes; rounding reconciliation S${result['reconciliation']['amount']:,}")
 
 if __name__=='__main__':
     main()
