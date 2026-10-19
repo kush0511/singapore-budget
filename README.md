@@ -2,7 +2,7 @@
 
 An interactive, source-linked flow of **Singapore Budget 2026 estimates**, from operating revenue and the Net Investment Returns Contribution (NIRC) to spending sectors, ministry portions, and 129 official programme allocations. Inspired by [USAFacts](https://usafacts.org/government-spending/), adapted to Singapore’s budget accounting.
 
-**GitHub Pages target (requires Pages enabled):** [kush0511.github.io/singapore-budget](https://kush0511.github.io/singapore-budget/)
+**Live site:** [kush0511.github.io/singapore-budget](https://kush0511.github.io/singapore-budget/)
 
 ## Explore
 
@@ -55,7 +55,9 @@ Add the new official source configuration, import it, and review its source anch
 
 ## Deployment
 
-Push to `main` to run the GitHub Pages workflow. Publication is gated on deterministic source regeneration, independent accounting tests (including deliberately corrupted inputs), dataset validation, and desktop/mobile browser checks. Browser screenshots are retained as CI artifacts. The build is static; there is no server, database, runtime API key, or paid hosting dependency.
+In repository **Settings → Pages → Build and deployment**, select **Source: GitHub Actions**. Do not publish the `main` branch directly: its HTML is a Vite source template, not the compiled site. The workflow publishes `dist/`.
+
+Push to `main` to run the GitHub Pages workflow. Publication is gated on deterministic source regeneration, independent accounting tests (including deliberately corrupted inputs), dataset validation, and desktop/mobile browser checks. After deployment, the same interaction and calculation checks run against the actual public URL. Browser screenshots are retained as CI artifacts. The HTML also provides readable fallback content if the entry script cannot load. The build is static; there is no server, database, runtime API key, or paid hosting dependency.
 
 The Vite base is relative, so the build works under a GitHub Pages project path. To use another repository, update the project links in `src/main.js` and this README.
 

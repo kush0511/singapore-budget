@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#11151b" />
+    <meta name="theme-color" content="#f4f0e7" />
     <meta
       name="description"
       content="Explore Singapore’s Budget 2026: follow revenue and investment returns through the budget to spending sectors and ministries. Official data, transparent calculations."
@@ -12,7 +12,29 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <main
+        style="
+          max-width: 760px;
+          margin: 48px auto;
+          padding: 24px;
+          font-family: Arial, sans-serif;
+          line-height: 1.7;
+        "
+      >
+        <h1>Singapore Budget</h1>
+        <p role="status">Loading the interactive budget…</p>
+        <p>
+          If the chart does not appear, <a href="./">reload this page</a> or
+          <a href="https://www.singaporebudget.gov.sg/revenue-and-expenditure"
+            >read the official budget</a
+          >.
+        </p>
+        <noscript
+          >JavaScript is required to display the interactive chart.</noscript
+        >
+      </main>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

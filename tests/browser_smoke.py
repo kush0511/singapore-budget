@@ -19,7 +19,6 @@ import re
 import subprocess
 import time
 from urllib.error import URLError
-from urllib.parse import urljoin
 from urllib.request import urlopen
 
 from playwright.sync_api import expect, sync_playwright
@@ -146,9 +145,13 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         expect(page.locator("body")).to_contain_text(fiscal_year)
         expect(page.locator("body")).not_to_contain_text(re.compile(r"\b(?:NaN|undefined|Infinity)\b"))
         data_link = page.locator('a[download][href$=".json"]')
-        dataset_response = page.request.get(urljoin(page.url, data_link.get_attribute("href")))
-        assert dataset_response.ok, "The published source-linked dataset is unavailable"
-        dataset = dataset_response.json()
+        # Use the browser's same-origin connection, including its configured
+        # proxy, instead of a separate direct APIRequestContext connection.
+        dataset = page.evaluate("""async href => {
+            const response = await fetch(href);
+            if (!response.ok) throw new Error(`Dataset unavailable: ${response.status}`);
+            return response.json();
+        }""", data_link.get_attribute("href"))
         assert str(dataset["fiscalYear"]) == fiscal_year
         flow = page.get_by_test_id("budget-flow")
         expect(flow).to_be_visible()
@@ -313,6 +316,22 @@ def check_page(browser, url: str, artifacts: Path, name: str, width: int, height
         context.close()
 
 
+
+def check_failed_script_fallback(browser, url: str):
+    """Reproduce the white-screen trigger: the published entry script is missing."""
+    context = browser.new_context(viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    try:
+        page.route("**/assets/*.js", lambda route: route.fulfill(status=404, body="missing", content_type="text/javascript"))
+        page.goto(url, wait_until="networkidle")
+        expect(page.get_by_role("heading", name="Singapore Budget", exact=True)).to_be_visible()
+        expect(page.get_by_role("link", name="read the official budget")).to_be_visible()
+        assert not page.get_by_test_id("budget-flow").count(), "The failure probe did not block the entry script"
+        print("PASS missing-script fallback: useful content remains instead of a blank page")
+    finally:
+        context.close()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:4173")
@@ -332,6 +351,7 @@ def main():
             check_page(browser, args.url, args.artifacts, "desktop", 1512, 982)
             check_page(browser, args.url, args.artifacts, "wide", 1920, 1080)
             check_page(browser, args.url, args.artifacts, "mobile", 390, 844)
+            check_failed_script_fallback(browser, args.url)
         finally:
             browser.close()
 
