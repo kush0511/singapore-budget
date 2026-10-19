@@ -1,0 +1,20 @@
+{
+  "name": "singapore-budget-flow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "npm test && node scripts/validate-data.mjs && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.mjs",
+    "data:refresh": "python scripts/import_budget.py --config data/config/2026.json",
+    "data:validate": "node scripts/validate-data.mjs"
+  },
+  "dependencies": {
+    "d3-sankey": "^0.12.3"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1"
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "fiscalYear": 2026,
+  "basis": "Estimated",
+  "budgetDate": "2026-02-12",
+  "retrievedAt": "2026-10-19",
+  "period": {
+    "start": "2026-04-01",
+    "end": "2027-03-31"
+  },
+  "vintageNote": "Budget Day estimates presented on 12 February 2026. Later April and July support measures are not folded into these estimates. These are plans, not actual outturns.",
+  "sourcePage": "https://www.mof.gov.sg/singaporebudget/revenue-and-expenditure",
+  "sources": [
+    {
+      "id": "mof-analysis",
+      "title": "Analysis of Revenue and Expenditure FY2026",
+      "url": "https://cms.singaporebudget.gov.sg/assets/032683cb-4369-4671-a58b-1844e5630ba1",
+      "file": "data/sources/fy2026-analysis.pdf",
+      "sha256": "9e26d6b489add446e206b8df0e882039eac14fb3775ca5ff7d8987418c556561",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "mof-estimates",
+      "title": "Revenue and Expenditure Estimates FY2026/2027",
+      "url": "https://cms.singaporebudget.gov.sg/assets/031bf134-5b42-4668-80e2-8743b0fe6c97",
+      "file": "data/sources/fy2026-estimates.pdf",
+      "sha256": "3455edce0d89ab1c5ef7101b813d1d668c065de43de12512b1238b6a4d08ca97",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "data-gov-revenue",
+      "title": "Government Operating Revenue · MOF on data.gov.sg",
+      "url": "https://data.gov.sg/api/action/datastore_search?resource_id=d_d6cd701a67607ac9d4f3d469d8c815e5&limit=10000",
+      "file": "data/sources/data-gov-revenue.json",
+      "sha256": "88892d1f891be13a3e0f40cccd37aec78262803952dfc79509f77463ed0f4943",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "data-gov-fiscal",
+      "title": "Government Fiscal Position · MOF on data.gov.sg",
+      "url": "https://data.gov.sg/api/action/datastore_search?resource_id=d_0f0800a6b2b4b391daffcd88b2cc97fd&limit=10000",
+      "file": "data/sources/data-gov-fiscal.json",
+      "sha256": "61e9b9e530f26ba0472aa6ef9902dbab239131732a13e7788cb56da22b03155c",
+      "retrievedAt": "2026-10-19"
+    }
+  ],
+  "revenue": [
+    {
+      "id": "corporate-income-tax",
+      "label": "Corporate income tax",
+      "code": "B111",
+      "sourceLabel": "Corporate Tax",
+      "dataGovTypes": [
+        "Corporate Income Tax"
+      ]
+    },
+    {
+      "id": "personal-income-tax",
+      "label": "Personal income tax",
+      "code": "B112",
+      "sourceLabel": "Personal Tax",
+      "dataGovTypes": [
+        "Personal Income Tax"
+      ]
+    },
+    {
+      "id": "goods-and-services-tax",
+      "label": "Goods & services tax",
+      "code": "B50",
+      "sourceLabel": "GOODS AND SERVICES TAX",
+      "dataGovTypes": [
+        "Goods and Services Tax"
+      ]
+    },
+    {
+      "id": "fees-and-charges",
+      "label": "Fees & charges (including COE)",
+      "code": "C00",
+      "sourceLabel": "FEES AND CHARGES",
+      "dataGovTypes": [
+        "Vehicle Quota Premiums",
+        "Fees and Charges (Excluding Vehicle Quota Premiums)"
+      ]
+    },
+    {
+      "id": "foreign-worker-levy",
+      "label": "Foreign worker levy",
+      "code": "B60",
+      "sourceLabel": "FOREIGN WORKER LEVY",
+      "dataGovTypes": [
+        "Foreign Worker Levy"
+      ]
+    },
+    {
+      "id": "asset-taxes",
+      "label": "Asset taxes",
+      "code": "B20",
+      "sourceLabel": "ASSET TAXES",
+      "dataGovTypes": [
+        "Asset Taxes"
+      ]
+    },
+    {
+      "id": "stamp-duty",
+      "label": "Stamp duty",
+      "code": "B70",
+      "sourceLabel": "STAMP DUTY",
+      "dataGovTypes": [
+        "Stamp Duty"
+      ]
+    },
+    {
+      "id": "customs-excise-carbon",
+      "label": "Customs, excise & carbon taxes",
+      "code": "B30",
+      "sourceLabel": "CUSTOMS, EXCISE AND CARBON TAXES",
+      "dataGovTypes": [
+        "Customs, Excise and Carbon Taxes"
+      ]
+    },
+    {
+      "id": "betting-taxes",
+      "label": "Betting taxes",
+      "code": "B801",
+      "sourceLabel": "Betting Taxes",
+      "dataGovTypes": [
+        "Betting Taxes"
+      ]
+    },
+    {
+      "id": "motor-vehicle-taxes",
+      "label": "Motor vehicle taxes",
+      "code": "B40",
+      "sourceLabel": "MOTOR VEHICLE TAXES",
+      "dataGovTypes": [
+        "Motor Vehicle Taxes"
+      ]
+    },
+    {
+      "id": "withholding-tax",
+      "label": "Withholding tax",
+      "code": "B113",
+      "sourceLabel": "Withholding Tax",
+      "dataGovTypes": [
+        "Withholding Tax"
+      ]
+    },
+    {
+      "id": "other-revenue",
+      "label": "Other operating revenue",
+      "code": "J00",
+      "sourceLabel": "OTHERS (OPERATING REVENUE)",
+      "dataGovTypes": [
+        "Others"
+      ]
+    },
+    {
+      "id": "other-taxes",
+      "label": "Other taxes",
+      "code": "B90",
+      "sourceLabel": "OTHER TAXES",
+      "dataGovTypes": [
+        "Other Taxes"
+      ]
+    },
+    {
+      "id": "statutory-board-contributions",
+      "label": "Statutory boards’ contributions",
+      "code": "B12",
+      "sourceLabel": "Statutory Boards' Contributions",
+      "dataGovTypes": [
+        "Statutory Boards' Contributions"
+      ]
+    },
+    {
+      "id": "water-conservation-tax",
+      "label": "Water conservation tax",
+      "code": "B802",
+      "sourceLabel": "Water Conservation Tax",
+      "dataGovTypes": [
+        "Water Conservation Tax"
+      ]
+    }
+  ],
+  "sectors": [
+    {
+      "id": "social-development",
+      "label": "Social development",
+      "sourceLabel": "Social Development",
+      "ministries": [
+        {
+          "id": "health",
+          "label": "Health",
+          "sourceLabel": "Health"
+        },
+        {
+          "id": "education",
+          "label": "Education",
+          "sourceLabel": "Education"
+        },
+        {
+          "id": "national-development",
+          "label": "National Development",
+          "sourceLabel": "National Development"
+        },
+        {
+          "id": "social-family-development",
+          "label": "Social and Family Development",
+          "sourceLabel": "Social and Family Development"
+        },
+        {
+          "id": "sustainability-environment",
+          "label": "Sustainability and the Environment",
+          "sourceLabel": "Sustainability and the Environment"
+        },
+        {
+          "id": "culture-community-youth",
+          "label": "Culture, Community and Youth",
+          "sourceLabel": "Culture, Community and Youth"
+        },
+        {
+          "id": "manpower-social",
+          "label": "Manpower",
+          "sourceLabel": "Manpower",
+          "note": "Financial Security for Singaporeans programme only. The economic-development portion is shown separately."
+        },
+        {
+          "id": "digital-social",
+          "label": "Digital Development and Information",
+          "sourceLabel": "Digital Development and Information",
+          "note": "Social-development portion of the Ministry of Digital Development and Information. Other portions appear in economic development and government administration."
+        }
+      ]
+    },
+    {
+      "id": "security-external-relations",
+      "label": "Security & external relations",
+      "sourceLabel": "Security & External Relations",
+      "ministries": [
+        {
+          "id": "defence",
+          "label": "Defence",
+          "sourceLabel": "Defence"
+        },
+        {
+          "id": "home-affairs",
+          "label": "Home Affairs",
+          "sourceLabel": "Home Affairs"
+        },
+        {
+          "id": "foreign-affairs",
+          "label": "Foreign Affairs",
+          "sourceLabel": "Foreign Affairs"
+        }
+      ]
+    },
+    {
+      "id": "economic-development",
+      "label": "Economic development",
+      "sourceLabel": "Economic Development",
+      "ministries": [
+        {
+          "id": "transport",
+          "label": "Transport",
+          "sourceLabel": "Transport"
+        },
+        {
+          "id": "trade-industry",
+          "label": "Trade and Industry",
+          "sourceLabel": "Trade and Industry"
+        },
+        {
+          "id": "manpower-economic",
+          "label": "Manpower",
+          "sourceLabel": "Manpower",
+          "note": "Economic-development portion of the Ministry of Manpower. The social-development portion is shown separately."
+        },
+        {
+          "id": "digital-economic",
+          "label": "Digital Development and Information",
+          "sourceLabel": "Digital Development and Information",
+          "note": "Info-communications Media Development Authority and Cyber Security Agency of Singapore programmes only."
+        }
+      ]
+    },
+    {
+      "id": "government-administration",
+      "label": "Government administration",
+      "sourceLabel": "Government Administration",
+      "ministries": [
+        {
+          "id": "finance",
+          "label": "Finance",
+          "sourceLabel": "Finance"
+        },
+        {
+          "id": "organs-of-state",
+          "label": "Organs Of State",
+          "sourceLabel": "Organs Of State",
+          "note": "Includes the Civil List, Attorney-General’s Chambers, Auditor-General’s Office, Cabinet Office, Judicature, Parliament, Presidential Councils and Public Service Commission."
+        },
+        {
+          "id": "prime-ministers-office",
+          "label": "Prime Minister's Office",
+          "sourceLabel": "Prime Minister's Office"
+        },
+        {
+          "id": "digital-administration",
+          "label": "Digital Development and Information",
+          "sourceLabel": "Digital Development and Information",
+          "note": "Smart Nation Group and Government Technology Agency programmes only."
+        },
+        {
+          "id": "law",
+          "label": "Law",
+          "sourceLabel": "Law"
+        }
+      ]
+    }
+  ],
+  "fiscalItems": {
+    "operatingRevenue": "Operating Revenue",
+    "totalExpenditure": "Total Expenditure",
+    "operatingExpenditure": "Operating Expenditure",
+    "developmentExpenditure": "Development Expenditure",
+    "primaryBalance": "Primary Surplus / Deficit",
+    "specialTransfers": "Special Transfers 2",
+    "directTransfers": "Special Transfers Excluding Top-ups to Statutory and Trust Funds",
+    "basicBalance": "Basic Surplus / Deficit",
+    "fundTopups": "Top-ups to Statutory and Trust Funds",
+    "nirc": "Net Investment Returns Contribution",
+    "overallBudgetBalance": "Overall Budget Surplus / Deficit",
+    "capitalisation": "Capitalisation of Nationally Significant Infrastructure",
+    "depreciation": "Depreciation of Nationally Significant Infrastructure",
+    "singaInterest": "SINGA Interest Costs and Loan Expenses3",
+    "overallFiscalPosition": "Overall Fiscal Position"
+  },
+  "fundTopups": [
+    {
+      "id": "changi-airport-development-fund",
+      "label": "Changi Airport Development Fund",
+      "amount": 6000000000
+    },
+    {
+      "id": "national-productivity-fund",
+      "label": "National Productivity Fund",
+      "amount": 6000000000
+    },
+    {
+      "id": "national-research-fund",
+      "label": "National Research Fund",
+      "amount": 5000000000
+    },
+    {
+      "id": "financial-sector-development-fund",
+      "label": "Financial Sector Development Fund",
+      "amount": 1500000000
+    },
+    {
+      "id": "long-term-care-support-fund",
+      "label": "Long-Term Care Support Fund",
+      "amount": 400000000
+    }
+  ],
+  "locators": {
+    "revenuePages": "1–2",
+    "sectorPage": "10",
+    "directTransferPage": "241",
+    "fundTopupPage": "444",
+    "fundDetailPage": "20"
+  }
+}

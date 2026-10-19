@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "unit": "SGD",
+  "fiscalYear": 2026,
+  "basis": "Estimated",
+  "budgetDate": "2026-02-12",
+  "retrievedAt": "2026-10-19",
+  "period": {
+    "start": "2026-04-01",
+    "end": "2027-03-31"
+  },
+  "vintageNote": "Budget Day estimates presented on 12 February 2026. Later April and July support measures are not folded into these estimates. These are plans, not actual outturns.",
+  "sourcePage": "https://www.mof.gov.sg/singaporebudget/revenue-and-expenditure",
+  "sources": [
+    {
+      "id": "mof-analysis",
+      "title": "Analysis of Revenue and Expenditure FY2026",
+      "url": "https://cms.singaporebudget.gov.sg/assets/032683cb-4369-4671-a58b-1844e5630ba1",
+      "file": "data/sources/fy2026-analysis.pdf",
+      "sha256": "9e26d6b489add446e206b8df0e882039eac14fb3775ca5ff7d8987418c556561",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "mof-estimates",
+      "title": "Revenue and Expenditure Estimates FY2026/2027",
+      "url": "https://cms.singaporebudget.gov.sg/assets/031bf134-5b42-4668-80e2-8743b0fe6c97",
+      "file": "data/sources/fy2026-estimates.pdf",
+      "sha256": "3455edce0d89ab1c5ef7101b813d1d668c065de43de12512b1238b6a4d08ca97",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "data-gov-revenue",
+      "title": "Government Operating Revenue · MOF on data.gov.sg",
+      "url": "https://data.gov.sg/api/action/datastore_search?resource_id=d_d6cd701a67607ac9d4f3d469d8c815e5&limit=10000",
+      "file": "data/sources/data-gov-revenue.json",
+      "sha256": "88892d1f891be13a3e0f40cccd37aec78262803952dfc79509f77463ed0f4943",
+      "retrievedAt": "2026-10-19"
+    },
+    {
+      "id": "data-gov-fiscal",
+      "title": "Government Fiscal Position · MOF on data.gov.sg",
+      "url": "https://data.gov.sg/api/action/datastore_search?resource_id=d_0f0800a6b2b4b391daffcd88b2cc97fd&limit=10000",
+      "file": "data/sources/data-gov-fiscal.json",
+      "sha256": "61e9b9e530f26ba0472aa6ef9902dbab239131732a13e7788cb56da22b03155c",
+      "retrievedAt": "2026-10-19"
+    }
+  ],
+  "totals": {
+    "operatingRevenue": 134753943000,
+    "totalExpenditure": 137323443300,
+    "operatingExpenditure": 103269171800,
+    "developmentExpenditure": 34054271500,
+    "primaryBalance": -2570000000,
+    "specialTransfers": 21736175400,
+    "directTransfers": 2836175400,
+    "basicBalance": -5406000000,
+    "fundTopups": 18900000000,
+    "nirc": 28482000000,
+    "overallBudgetBalance": 4176000000,
+    "capitalisation": 5019000000,
+    "depreciation": 0,
+    "singaInterest": 652000000,
+    "overallFiscalPosition": 8543000000,
+    "totalRevenue": 163235943000,
+    "totalOutlays": 159059618700
+  },
+  "precision": {
+    "operatingRevenue": 1000,
+    "totalExpenditure": 100,
+    "operatingExpenditure": 100,
+    "developmentExpenditure": 100,
+    "primaryBalance": 1000000,
+    "specialTransfers": 100,
+    "directTransfers": 100,
+    "basicBalance": 1000000,
+    "fundTopups": 100,
+    "nirc": 1000000,
+    "overallBudgetBalance": 1000000,
+    "capitalisation": 1000000,
+    "depreciation": 1000000,
+    "singaInterest": 1000000,
+    "overallFiscalPosition": 1000000,
+    "totalRevenue": 1000000,
+    "totalOutlays": 100
+  },
+  "publishedRoundedTotals": {
+    "operatingRevenue": 134754000000,
+    "totalExpenditure": 137323000000,
+    "operatingExpenditure": 103269000000,
+    "developmentExpenditure": 34054000000,
+    "primaryBalance": -2570000000,
+    "specialTransfers": 21736000000,
+    "directTransfers": 2836000000,
+    "basicBalance": -5406000000,
+    "fundTopups": 18900000000,
+    "nirc": 28482000000,
+    "overallBudgetBalance": 4176000000,
+    "capitalisation": 5019000000,
+    "depreciation": 0,
+    "singaInterest": 652000000,
+    "overallFiscalPosition": 8543000000
+  },
+  "revenue": [
+    {
+      "id": "corporate-income-tax",
+      "label": "Corporate income tax",
+      "amount": 37768490000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B111",
+      "precision": 1000
+    },
+    {
+      "id": "personal-income-tax",
+      "label": "Personal income tax",
+      "amount": 21797023000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B112",
+      "precision": 1000
+    },
+    {
+      "id": "goods-and-services-tax",
+      "label": "Goods & services tax",
+      "amount": 22254882000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B50",
+      "precision": 1000
+    },
+    {
+      "id": "fees-and-charges",
+      "label": "Fees & charges (including COE)",
+      "amount": 13328102000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "C00",
+      "precision": 1000
+    },
+    {
+      "id": "foreign-worker-levy",
+      "label": "Foreign worker levy",
+      "amount": 7455384000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B60",
+      "precision": 1000
+    },
+    {
+      "id": "asset-taxes",
+      "label": "Asset taxes",
+      "amount": 7318084000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B20",
+      "precision": 1000
+    },
+    {
+      "id": "stamp-duty",
+      "label": "Stamp duty",
+      "amount": 6918906000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B70",
+      "precision": 1000
+    },
+    {
+      "id": "customs-excise-carbon",
+      "label": "Customs, excise & carbon taxes",
+      "amount": 4155109000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B30",
+      "precision": 1000
+    },
+    {
+      "id": "betting-taxes",
+      "label": "Betting taxes",
+      "amount": 3772189000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B801",
+      "precision": 1000
+    },
+    {
+      "id": "motor-vehicle-taxes",
+      "label": "Motor vehicle taxes",
+      "amount": 2800101000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B40",
+      "precision": 1000
+    },
+    {
+      "id": "withholding-tax",
+      "label": "Withholding tax",
+      "amount": 2625446000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B113",
+      "precision": 1000
+    },
+    {
+      "id": "other-revenue",
+      "label": "Other operating revenue",
+      "amount": 2007975000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "J00",
+      "precision": 1000
+    },
+    {
+      "id": "other-taxes",
+      "label": "Other taxes",
+      "amount": 1634405000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B90",
+      "precision": 1000
+    },
+    {
+      "id": "statutory-board-contributions",
+      "label": "Statutory boards’ contributions",
+      "amount": 507847000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B12",
+      "precision": 1000
+    },
+    {
+      "id": "water-conservation-tax",
+      "label": "Water conservation tax",
+      "amount": 410000000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "1–2",
+      "sourceCode": "B802",
+      "precision": 1000
+    }
+  ],
+  "sectors": [
+    {
+      "id": "social-development",
+      "label": "Social development",
+      "operating": 58904385000,
+      "development": 6905621100,
+      "amount": 65810006100,
+      "sourceId": "mof-estimates",
+      "sourcePage": "10",
+      "precision": 100,
+      "ministries": [
+        {
+          "id": "health",
+          "label": "Health",
+          "operating": 20035362700,
+          "development": 2467566400,
+          "amount": 22502929100,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "education",
+          "label": "Education",
+          "operating": 15265000000,
+          "development": 1185000000,
+          "amount": 16450000000,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "national-development",
+          "label": "National Development",
+          "operating": 8640058800,
+          "development": 1447092900,
+          "amount": 10087151700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "social-family-development",
+          "label": "Social and Family Development",
+          "operating": 5811958800,
+          "development": 259759300,
+          "amount": 6071718100,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "sustainability-environment",
+          "label": "Sustainability and the Environment",
+          "operating": 2890704400,
+          "development": 802209000,
+          "amount": 3692913400,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "culture-community-youth",
+          "label": "Culture, Community and Youth",
+          "operating": 2407711100,
+          "development": 677912500,
+          "amount": 3085623600,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "manpower-social",
+          "label": "Manpower",
+          "operating": 2652572800,
+          "development": 0,
+          "amount": 2652572800,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Financial Security for Singaporeans programme only. The economic-development portion is shown separately."
+        },
+        {
+          "id": "digital-social",
+          "label": "Digital Development and Information",
+          "operating": 1201016400,
+          "development": 66081000,
+          "amount": 1267097400,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Social-development portion of the Ministry of Digital Development and Information. Other portions appear in economic development and government administration."
+        }
+      ]
+    },
+    {
+      "id": "security-external-relations",
+      "label": "Security & external relations",
+      "operating": 33145346500,
+      "development": 4127607000,
+      "amount": 37272953500,
+      "sourceId": "mof-estimates",
+      "sourcePage": "10",
+      "precision": 100,
+      "ministries": [
+        {
+          "id": "defence",
+          "label": "Defence",
+          "operating": 23315060400,
+          "development": 1618819600,
+          "amount": 24933880000,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "home-affairs",
+          "label": "Home Affairs",
+          "operating": 9232333600,
+          "development": 2462087400,
+          "amount": 11694421000,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "foreign-affairs",
+          "label": "Foreign Affairs",
+          "operating": 597952500,
+          "development": 46700000,
+          "amount": 644652500,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        }
+      ]
+    },
+    {
+      "id": "economic-development",
+      "label": "Economic development",
+      "operating": 7242115500,
+      "development": 22506943800,
+      "amount": 29749059300,
+      "sourceId": "mof-estimates",
+      "sourcePage": "10",
+      "precision": 100,
+      "ministries": [
+        {
+          "id": "transport",
+          "label": "Transport",
+          "operating": 3109174200,
+          "development": 13040422500,
+          "amount": 16149596700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "trade-industry",
+          "label": "Trade and Industry",
+          "operating": 1861576000,
+          "development": 9241525400,
+          "amount": 11103101400,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "manpower-economic",
+          "label": "Manpower",
+          "operating": 1268426600,
+          "development": 178690100,
+          "amount": 1447116700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Economic-development portion of the Ministry of Manpower. The social-development portion is shown separately."
+        },
+        {
+          "id": "digital-economic",
+          "label": "Digital Development and Information",
+          "operating": 1002938700,
+          "development": 46305800,
+          "amount": 1049244500,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Info-communications Media Development Authority and Cyber Security Agency of Singapore programmes only."
+        }
+      ]
+    },
+    {
+      "id": "government-administration",
+      "label": "Government administration",
+      "operating": 3977324800,
+      "development": 514099600,
+      "amount": 4491424400,
+      "sourceId": "mof-estimates",
+      "sourcePage": "10",
+      "precision": 100,
+      "ministries": [
+        {
+          "id": "finance",
+          "label": "Finance",
+          "operating": 1252306600,
+          "development": 68615100,
+          "amount": 1320921700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "organs-of-state",
+          "label": "Organs Of State",
+          "operating": 855133600,
+          "development": 28245200,
+          "amount": 883378800,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Includes the Civil List, Attorney-General’s Chambers, Auditor-General’s Office, Cabinet Office, Judicature, Parliament, Presidential Councils and Public Service Commission."
+        },
+        {
+          "id": "prime-ministers-office",
+          "label": "Prime Minister's Office",
+          "operating": 716843400,
+          "development": 123553300,
+          "amount": 840396700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        },
+        {
+          "id": "digital-administration",
+          "label": "Digital Development and Information",
+          "operating": 780732100,
+          "development": 6638400,
+          "amount": 787370500,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100,
+          "note": "Smart Nation Group and Government Technology Agency programmes only."
+        },
+        {
+          "id": "law",
+          "label": "Law",
+          "operating": 372309100,
+          "development": 287047600,
+          "amount": 659356700,
+          "sourceId": "mof-estimates",
+          "sourcePage": "10",
+          "precision": 100
+        }
+      ]
+    }
+  ],
+  "specialTransfers": [
+    {
+      "id": "fund-topups",
+      "label": "Top-ups to statutory & trust funds",
+      "amount": 18900000000,
+      "sourceId": "mof-estimates",
+      "sourcePage": "444",
+      "precision": 100,
+      "children": [
+        {
+          "id": "changi-airport-development-fund",
+          "label": "Changi Airport Development Fund",
+          "amount": 6000000000,
+          "sourceId": "mof-analysis",
+          "sourcePage": "20",
+          "precision": 1000000
+        },
+        {
+          "id": "national-productivity-fund",
+          "label": "National Productivity Fund",
+          "amount": 6000000000,
+          "sourceId": "mof-analysis",
+          "sourcePage": "20",
+          "precision": 1000000
+        },
+        {
+          "id": "national-research-fund",
+          "label": "National Research Fund",
+          "amount": 5000000000,
+          "sourceId": "mof-analysis",
+          "sourcePage": "20",
+          "precision": 1000000
+        },
+        {
+          "id": "financial-sector-development-fund",
+          "label": "Financial Sector Development Fund",
+          "amount": 1500000000,
+          "sourceId": "mof-analysis",
+          "sourcePage": "20",
+          "precision": 1000000
+        },
+        {
+          "id": "long-term-care-support-fund",
+          "label": "Long-Term Care Support Fund",
+          "amount": 400000000,
+          "sourceId": "mof-analysis",
+          "sourcePage": "20",
+          "precision": 1000000
+        }
+      ]
+    },
+    {
+      "id": "direct-transfers",
+      "label": "Transfers to Singaporeans & businesses",
+      "amount": 2836175400,
+      "sourceId": "mof-estimates",
+      "sourcePage": "241",
+      "precision": 100
+    }
+  ],
+  "reconciliation": {
+    "id": "published-rounding",
+    "label": "Published rounding",
+    "role": "reconciliation",
+    "amount": 324300,
+    "includedInSpending": false,
+    "maximumAbsoluteAmount": 1000000,
+    "note": "The MOF publishes NIRC and overall budget balance to the nearest S$1 million. This difference reconciles those rounded figures with the more precise revenue and expenditure estimates. It is not government spending."
+  },
+  "notes": [
+    "Flows show a pooled budget. Revenue sources are not earmarked to the ministries they visually connect to.",
+    "Ministry figures are total expenditure by sector from the MOF summary, excluding loans, land-related expenditure and other non-expenditure outlays. Manpower and Digital Development and Information are split across sectors by programme; their portions are not whole-ministry totals.",
+    "Special transfers include fund top-ups, not subsequent spending from those funds. Counting both would double count.",
+    "Land sales and borrowing are not operating revenue. Net Investment Returns Contribution is included separately; gross investment and interest income is not added.",
+    "The overall budget balance precedes SINGA capitalisation and financing adjustments. The overall fiscal position includes those adjustments.",
+    "Fees and charges include vehicle quota premiums (COE). They are combined to preserve the exact published category total. Changes in scope make FY2025/FY2026 fees and other revenue comparisons unsuitable without adjustment.",
+    "Widths use source amounts in Singapore dollars. Displayed billions and percentages are rounded."
+  ]
+}
